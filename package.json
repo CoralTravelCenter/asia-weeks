@@ -1,0 +1,17 @@
+{
+  "name": "asia-weeks",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "b2c-landing-vite dev",
+    "build": "b2c-landing-vite build",
+    "check": "b2c-landing-vite check",
+    "block:add": "b2c-landing-vite block:add",
+    "block:rename": "b2c-landing-vite block:rename"
+  },
+  "devDependencies": {
+    "pug": "^3.0.4",
+    "sass": "^1.101.0"
+  }
+}

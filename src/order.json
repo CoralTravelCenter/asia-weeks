@@ -1,5 +1,9 @@
 {
+  "folder": "asia-weeks",
   "blocks": [
-    "welcome"
+    "welcome",
+    "navigation",
+    "why-you-have-to",
+    "three-country"
   ]
 }

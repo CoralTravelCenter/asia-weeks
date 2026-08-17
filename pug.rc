@@ -1,3 +1,302 @@
 {
-  "pretty": true
+  "pretty": true,
+  "whyTravel": {
+    "title": "Почему стоит поехать",
+    "cards": [
+      {
+        "icon": "/ben-icon-1.png",
+        "title": "Теплый климат",
+        "text": "Зимой – к солнцу, летом – к морю. Здесь всегда найдется подходящее направление"
+      },
+      {
+        "icon": "/ben-icon-2.png",
+        "title": "Пляжи и острова",
+        "text": "От оживленных пляжей до уединенных бухт – каждый найдет свой идеальный уголок"
+      },
+      {
+        "icon": "/ben-icon-3.png",
+        "title": "Вкусная еда",
+        "text": "Каждая страна – новые вкусы: ароматный фобо, пряный том-ям и многое другое"
+      },
+      {
+        "icon": "/ben-icon-4.png",
+        "title": "Красивая природа",
+        "text": "Рисовые террасы, тропический лес, скалы в море – три разные Азии"
+      },
+      {
+        "icon": "/ben-icon-5.png",
+        "title": "Необычная культура",
+        "text": "Храмы, чайные церемонии, традиционные массажи и колоритные рынки"
+      },
+      {
+        "icon": "/ben-icon-6.png",
+        "title": "Большой выбор отелей",
+        "text": "От бюджетных «трёшек» до вилл 5* – под любой бюджет и запрос"
+      }
+    ]
+  },
+  "destinations": {
+    "partners": {
+      "title": "Заберите сюрприз от партнера",
+      "items": [
+        {
+          "id": "pho-bo",
+          "title": "Pho Bò",
+          "text": "Сеть кафе с настоящим вкусом Вьетнама",
+          "image": "/partner-pho-bo.jpg",
+          "button": "Забрать"
+        },
+        {
+          "id": "massage",
+          "title": "Массаж",
+          "text": "Более 80 салонов тайского СПА в Москве и МО. Место для отдыха и спокойствия",
+          "image": "/partner-massage.jpg",
+          "button": "Забрать"
+        },
+        {
+          "id": "tea",
+          "title": "Чай",
+          "text": "Клуб китайской чайной культуры — гармония в каждой чашке",
+          "image": "/partner-tea.jpg",
+          "button": "Забрать"
+        }
+      ]
+    },
+    "countries": [
+      {
+        "id": "china",
+        "tab": "Китай",
+        "title": "Китай",
+        "banner": {
+          "image": "/china-banner.jpg",
+          "title": "Китай",
+          "text": "",
+          "personImage": ""
+        },
+        "weather": {
+          "title": "Погода",
+          "text": "",
+          "seasons": [
+            {
+              "title": "Зима",
+              "temperature": "",
+              "image": ""
+            },
+            {
+              "title": "Весна",
+              "temperature": "",
+              "image": ""
+            },
+            {
+              "title": "Лето",
+              "temperature": "",
+              "image": ""
+            },
+            {
+              "title": "Осень",
+              "temperature": "",
+              "image": ""
+            }
+          ]
+        },
+        "visa": {
+          "title": "Виза",
+          "text": "",
+          "imageLeft": "",
+          "imageRight": ""
+        },
+        "cuisine": {
+          "title": "Кухня",
+          "text": "",
+          "image": "",
+          "recommendation": {
+            "title": "Что попробовать?",
+            "items": [],
+            "button": "Выбрать тур"
+          }
+        },
+        "resorts": {
+          "title": "Курорты и пляжи",
+          "decor": "",
+          "items": []
+        },
+        "places": {
+          "title": "Обязательные места для посещения",
+          "decor": "",
+          "items": []
+        },
+        "massage": {
+          "title": "Массаж",
+          "text": "",
+          "image": "",
+          "recommendation": {
+            "title": "Что попробовать?",
+            "items": [],
+            "button": "Выбрать тур"
+          }
+        },
+        "hotels": {
+          "title": "Отели",
+          "text": "",
+          "background": ""
+        }
+      },
+      {
+        "id": "vietnam",
+        "tab": "Вьетнам",
+        "title": "Вьетнам",
+        "banner": {
+          "image": "/vietnam-banner.jpg",
+          "title": "Вьетнам",
+          "text": "",
+          "personImage": ""
+        },
+        "weather": {
+          "title": "Погода",
+          "text": "",
+          "seasons": []
+        },
+        "visa": {
+          "title": "Виза",
+          "text": "",
+          "imageLeft": "",
+          "imageRight": ""
+        },
+        "cuisine": {
+          "title": "Кухня",
+          "text": "",
+          "image": "",
+          "recommendation": {
+            "title": "Что попробовать?",
+            "items": [],
+            "button": "Выбрать тур"
+          }
+        },
+        "resorts": {
+          "title": "Курорты и пляжи",
+          "decor": "",
+          "items": []
+        },
+        "places": {
+          "title": "Обязательные места для посещения",
+          "decor": "",
+          "items": []
+        },
+        "massage": {
+          "title": "Массаж",
+          "text": "",
+          "image": "",
+          "recommendation": {
+            "title": "Что попробовать?",
+            "items": [],
+            "button": "Выбрать тур"
+          }
+        },
+        "hotels": {
+          "title": "Отели",
+          "text": "",
+          "background": ""
+        }
+      },
+      {
+        "id": "thailand",
+        "tab": "Таиланд",
+        "title": "Таиланд",
+        "banner": {
+          "image": "/thailand-banner.jpg",
+          "title": "Таиланд",
+          "text": "",
+          "personImage": ""
+        },
+        "weather": {
+          "title": "Погода",
+          "text": "",
+          "seasons": [
+            {
+              "title": "Зима",
+              "temperature": "+28…+32 °C",
+              "image": ""
+            },
+            {
+              "title": "Весна",
+              "temperature": "+32…+35 °C",
+              "image": ""
+            },
+            {
+              "title": "Лето",
+              "temperature": "+28…+31 °C",
+              "image": ""
+            },
+            {
+              "title": "Осень",
+              "temperature": "+28…+31 °C",
+              "image": ""
+            }
+          ]
+        },
+        "visa": {
+          "title": "Виза",
+          "text": "",
+          "imageLeft": "",
+          "imageRight": ""
+        },
+        "cuisine": {
+          "title": "Кухня",
+          "text": "",
+          "image": "",
+          "recommendation": {
+            "title": "Что попробовать?",
+            "items": [],
+            "button": "Выбрать тур"
+          }
+        },
+        "resorts": {
+          "title": "Курорты и пляжи",
+          "decor": "",
+          "items": [
+            {
+              "title": "Пхукет",
+              "text": "",
+              "image": ""
+            },
+            {
+              "title": "Самуи",
+              "text": "",
+              "image": ""
+            },
+            {
+              "title": "Паттайя",
+              "text": "",
+              "image": ""
+            },
+            {
+              "title": "Краби",
+              "text": "",
+              "image": ""
+            }
+          ]
+        },
+        "places": {
+          "title": "Обязательные места для посещения",
+          "decor": "",
+          "items": []
+        },
+        "massage": {
+          "title": "Массаж",
+          "text": "",
+          "image": "",
+          "recommendation": {
+            "title": "Что попробовать?",
+            "items": [],
+            "button": "Выбрать тур"
+          }
+        },
+        "hotels": {
+          "title": "Отели",
+          "text": "",
+          "background": ""
+        }
+      }
+    ]
+  }
 }

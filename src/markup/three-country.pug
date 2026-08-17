@@ -1,0 +1,46 @@
+section.coral.three-country
+    .coral__inner.container
+        h2 Три разных отдыха
+        p #[strong Убедитесь сами: Азия бывает разной. Вьетнам, Китай и Таиланд] — три направления со своим характером. Сравните их по погоде, кухне, отелям, пляжам и главным местам, чтобы выбрать путешествие, которое подойдёт именно вам.
+
+        nav.destinations-tabs(aria-label="Выбор страны")
+            ul.destinations-tabs__list(role="tablist")
+              each country, index in destinations.countries
+                  li.destinations-tabs__item(role="presentation")
+                      button.destinations-tabs__button(
+                          type="button"
+                          role="tab"
+                          id=`tab-${country.id}`
+                          data-country-tab=country.id
+                          aria-controls=`panel-${country.id}`
+                          aria-selected=index === 0 ? "true" : "false"
+                          tabindex=index === 0 ? "0" : "-1"
+                      )
+                          = country.tab
+
+        h2 Заберите сюрприз от партнера
+        p Наши партнеры, получите промокоды и тд...
+        ul.partners__list
+          each partner in destinations.partners.items
+              li.partners__item
+                  article.partner-card
+                      img.partner-card__image(
+                          src=partner.image
+                          alt=""
+                      )
+
+                      .partner-card__content
+                          h3.partner-card__title= partner.title
+
+                          if partner.text
+                              p.partner-card__text= partner.text
+
+                          coral-button(
+                              trait="pale"
+                              shape="pill"
+                              size="medium"
+                          )
+                              a(
+                                  href=partner.link || "#"
+                                  data-partner=partner.id
+                              )= partner.button

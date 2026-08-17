@@ -1,3 +1,16 @@
-section.welcome
-  h1 B2C landing
-  div(data-welcome-app)
+section.coral.welcome
+    .coral__inner.container
+        coral-main-banner
+            coral-image(
+                src="/kv-mob.jpg"
+                tone="dark"
+                slot="visual-phone-light"
+            )
+            coral-image(
+                src="/kv.jpg"
+                tone="dark"
+                slot="visual-wide-light"
+            )
+            h1(slot="line", style="font-family: 'Sangha Kali', sans-serif;") Азиатские недели  с Coral Travel
+            span(slot="subline") Выбирайте страну — забирайте сюрприз от партнера
+            span(slot="geotag") ГБич Дон, Ниньбинь, Вьетнам

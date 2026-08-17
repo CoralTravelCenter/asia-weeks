@@ -1,5 +1,16 @@
-$spacing: 2rem;
+@use 'tokens/colors';
+@use 'tokens/spacing';
+@use 'tokens/layout';
+@use 'tokens/typography';
+@use 'tokens/motion';
 
-.welcome {
-  padding: $spacing;
+@use 'generic/reset';
+
+@use 'base/fonts';
+@use 'base/document';
+
+@use 'objects/container';
+
+section.welcome {
+  padding-top: 16px;
 }

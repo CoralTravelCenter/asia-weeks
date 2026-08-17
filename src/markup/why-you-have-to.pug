@@ -1,0 +1,28 @@
+section.coral.why-you-have-to(data-gsap-section="why-you-have-to")
+    .why-you-have-to__decor.why-you-have-to__decor--dragon(
+        aria-hidden="true"
+        data-parallax="dragon"
+    )
+
+    .why-you-have-to__decor.why-you-have-to__decor--flower(
+        aria-hidden="true"
+        data-parallax="flower"
+    )
+    .coral__inner.container
+        h2 Одна Азия — тысячи впечатлений
+        p Запускаем «Азиатские недели»! Мы подготовили гид по Китаю, Вьетнаму и Таиланду, собрали полезные советы, вдохновляющие идеи, специальные предложения и подарки от партнёров, чтобы выбор отпуска стал приятной частью путешествия. #[strong Выбирайте настроение — маршрут мы уже продумали.]
+
+        h3 Почему стоит поехать
+        ul.why-travel__list
+          each card in whyTravel.cards
+              li.why-travel__item
+                  article.why-travel-card
+                      .why-travel-card__header
+                          img.why-travel-card__icon(
+                              src=card.icon
+                              alt=""
+                          )
+
+                          h4.why-travel-card__title= card.title
+
+                      p.why-travel-card__text= card.text

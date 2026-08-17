@@ -1,0 +1,92 @@
+.why-you-have-to {
+  position: relative;
+  background: #f1f8ff;
+
+  &__decor {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    // GSAP parallax будет менять transform
+    will-change: transform;
+
+    &--dragon {
+      top: -8%;
+      left: 10px;
+      width: 100%;
+      height: 100%;
+      background-position: center;
+      background-image: url('/dragon.png');
+    }
+
+    &--flower {
+      left: 40%;
+      bottom: -13%;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1;
+      background-position: bottom right;
+      background-image: url('/flower.png');
+    }
+  }
+
+  .coral__inner {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+
+.why-travel__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+
+.why-travel__item {
+  min-width: 0;
+}
+
+
+.why-travel-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  height: 100%;
+  padding: var(--padding-padding_LG, 24px);
+
+  border-radius: var(--radius-border_Radius_MD, 20px);
+  background: var(--Base-color_Base_Light, #fff);
+}
+
+
+.why-travel-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+.why-travel-card__icon {
+  flex: 0 0 auto;
+
+  width: 40px;
+  height: 40px;
+
+  object-fit: contain;
+}
+
+
+.why-travel-card__title {
+  color: #0092d0;
+}

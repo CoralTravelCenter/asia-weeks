@@ -1,0 +1,72 @@
+@use '../tools/media' as media;
+
+:root {
+  // Mobile: <= 768px
+  --container-width: 1440px;
+  --page-gutter: 16px;
+
+  --section-space-sm: 40px;
+  --section-space-md: 56px;
+  --section-space-lg: 80px;
+
+  --layout-gap-sm: 16px;
+  --layout-gap-md: 24px;
+  --layout-gap-lg: 32px;
+
+  --content-gap-xs: 8px;
+  --content-gap-sm: 12px;
+  --content-gap-md: 16px;
+  --content-gap-lg: 24px;
+}
+
+@include media.tablet {
+  :root {
+    --page-gutter: 24px;
+
+    --section-space-sm: 48px;
+    --section-space-md: 64px;
+    --section-space-lg: 96px;
+  }
+}
+
+@include media.screen-1024 {
+  :root {
+    --page-gutter: 32px;
+
+    --section-space-sm: 48px;
+    --section-space-md: 64px;
+    --section-space-lg: 96px;
+
+    --layout-gap-sm: 24px;
+    --layout-gap-md: 32px;
+    --layout-gap-lg: 48px;
+  }
+}
+
+@include media.screen-1280 {
+  :root {
+    --page-gutter: 40px;
+
+    --section-space-sm: 56px;
+    --section-space-md: 80px;
+    --section-space-lg: 128px;
+
+    --layout-gap-sm: 32px;
+    --layout-gap-md: 40px;
+    --layout-gap-lg: 64px;
+  }
+}
+
+@include media.screen-1440 {
+  :root {
+    --page-gutter: 48px;
+
+    --section-space-sm: 64px;
+    --section-space-md: 96px;
+    --section-space-lg: 160px;
+
+    --layout-gap-sm: 32px;
+    --layout-gap-md: 48px;
+    --layout-gap-lg: 80px;
+  }
+}

@@ -1,0 +1,71 @@
+@use '../tools/media' as media;
+
+:root {
+  --font-family-accent: 'Sangha Kali', sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --font-display-xl: 52px;
+  --font-display-lg: 44px;
+
+  --font-heading-xl: 40px;
+  --font-heading-lg: 36px;
+  --font-heading-md: 28px;
+  --font-heading-sm: 24px;
+
+  --font-lead: 20px;
+  --font-body-lg: 18px;
+  --font-body: 16px;
+  --font-body-sm: 14px;
+  --font-caption: 12px;
+
+  --line-display: 0.92;
+  --line-heading: 1.05;
+  --line-lead: 1.35;
+  --line-body: 1.5;
+  --line-small: 1.4;
+
+  --tracking-display: -0.04em;
+  --tracking-heading: -0.025em;
+}
+
+@include media.screen-1024 {
+  :root {
+    --font-display-xl: 80px;
+    --font-display-lg: 72px;
+
+    --font-heading-xl: 56px;
+    --font-heading-lg: 44px;
+    --font-heading-md: 32px;
+
+    --font-lead: 22px;
+  }
+}
+
+@include media.screen-1280 {
+  :root {
+    --font-display-xl: 104px;
+    --font-display-lg: 88px;
+
+    --font-heading-xl: 64px;
+    --font-heading-lg: 48px;
+    --font-heading-md: 36px;
+  }
+}
+
+@include media.screen-1440 {
+  :root {
+    --font-display-xl: 120px;
+    --font-display-lg: 96px;
+
+    --font-heading-xl: 72px;
+    --font-heading-lg: 56px;
+    --font-heading-md: 40px;
+    --font-heading-sm: 32px;
+
+    --font-lead: 24px;
+    --font-body-lg: 20px;
+  }
+}

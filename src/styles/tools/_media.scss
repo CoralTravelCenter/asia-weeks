@@ -1,0 +1,31 @@
+@use '../settings/breakpoints' as bp;
+
+@mixin tablet {
+  @media (min-width: bp.$screen-tablet) {
+    @content;
+  }
+}
+
+@mixin screen-1024 {
+  @media (min-width: bp.$screen-1024) {
+    @content;
+  }
+}
+
+@mixin screen-1280 {
+  @media (min-width: bp.$screen-1280) {
+    @content;
+  }
+}
+
+@mixin screen-1440 {
+  @media (min-width: bp.$screen-1440) {
+    @content;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

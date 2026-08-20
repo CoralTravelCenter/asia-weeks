@@ -1,0 +1,34 @@
+mixin countryMassage(data)
+    section.coral.country-massage
+        .coral__inner.container
+            h2= data.title
+
+            if data.text
+                p.country-massage__text= data.text
+
+            coral-pictorial(
+                trait="vivid"
+                layout="alt"
+            )
+                coral-image(
+                    slot="visual-phone"
+                    src=data.image
+                )
+
+                h3(slot="heading")= data.recommendation.title
+
+                if data.recommendation.items.length
+                    ul(slot="body")
+                        each item in data.recommendation.items
+                            li= item
+
+                coral-button-group(
+                    slot="actions"
+                    trait="inline"
+                    primary-trait="vivid"
+                )
+                    coral-button(primary="")
+                        a(href=data.recommendation.link || "#")= data.recommendation.button
+
+            if data.afterText
+                p.country-massage__text.country-massage__text--after= data.afterText

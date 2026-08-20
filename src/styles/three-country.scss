@@ -1,3 +1,11 @@
+@use 'blocks/story';
+@use 'blocks/weather';
+@use 'blocks/visa';
+@use 'blocks/resorts';
+@use 'blocks/places';
+@use 'blocks/hotels';
+
+
 .three-country {
   padding-right: 0;
 
@@ -77,4 +85,21 @@
   border-radius: 20px;
   overflow: clip;
   height: 300px;
+}
+
+.destinations-tabs__panel {
+  display: none;
+
+  &.is-active {
+    display: block;
+  }
+}
+
+.destinations-tabs__button {
+  border-radius: 30px;
+
+  &.is-active {
+    background: #0092D0;
+    color: white;
+  }
 }

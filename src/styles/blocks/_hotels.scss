@@ -1,0 +1,35 @@
+.country-hotels {
+  padding-block: 48px;
+  background-image: url("/hotels-bg.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.country-hotels__tabs {
+  margin-top: 24px;
+  overflow-x: auto;
+}
+
+.country-hotels__tabs-list {
+  display: flex;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  gap: 12px;
+  list-style: none;
+}
+
+.country-hotels__tab {
+  padding: 12px 20px;
+  border: 1px solid currentColor;
+  border-radius: 100px;
+  background: transparent;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &.is-active {
+    background: #009bd8;
+    color: #fff;
+  }
+}

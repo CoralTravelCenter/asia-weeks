@@ -1,0 +1,56 @@
+.country-resorts {
+  overflow: hidden;
+}
+
+.country-resorts__slider {
+  margin-top: 24px;
+}
+
+.country-resorts__viewport {
+  overflow: hidden;
+}
+
+.country-resorts__container {
+  display: flex;
+}
+
+.country-resorts__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.country-resorts__dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.country-resorts__dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #bde8fa;
+  cursor: pointer;
+
+  &.is-active {
+    background: #0099cc;
+  }
+}
+
+.country-resorts__container,
+.country-places__container {
+  display: flex;
+  align-items: stretch;
+  touch-action: pan-y pinch-zoom;
+}
+
+.country-resorts__slide,
+.country-places__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  display: flex;
+}
+

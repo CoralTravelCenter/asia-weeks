@@ -1,0 +1,18 @@
+mixin countryHotels(data, countryId)
+    section.coral.country-hotels(class=`country-hotels--${countryId}`)
+        .coral__inner.container
+            h2= data.title
+
+            if data.text
+                p.country-hotels__text= data.text
+
+            if data.tabs && data.tabs.length
+                nav.country-hotels__tabs(aria-label="Категории отелей")
+                    ul.country-hotels__tabs-list
+                        each tab, index in data.tabs
+                            li.country-hotels__tabs-item
+                                button.country-hotels__tab(
+                                    type="button"
+                                    data-hotel-tab=tab.id
+                                    class=index === 0 ? "is-active" : ""
+                                )= tab.title

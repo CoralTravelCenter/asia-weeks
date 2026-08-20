@@ -1,0 +1,24 @@
+mixin countryResorts(data)
+    section.coral.country-resorts
+        .coral__inner.container
+            h2= data.title
+
+            .country-resorts__slider(data-resorts-slider)
+                .country-resorts__viewport
+                    .country-resorts__container
+                        each resort in data.items
+                            .country-resorts__slide
+                                coral-pictorial(
+                                    trait="plain"
+                                    layout="normal"
+                                    style="display: block; width: 100%; height: 100%;"
+                                )
+                                    coral-image(
+                                        slot="visual-wide"
+                                        src=resort.image
+                                    )
+
+                                    h3(slot="heading")= resort.title
+                                    p(slot="body")!= resort.text
+
+                .country-resorts__dots

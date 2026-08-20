@@ -1,4 +1,10 @@
-export default function three_country() {
-  const block = document.querySelector(".three-country");
-  if (!block) return;
+import {hostReactAppReady} from "../utils/hostReactAppReady.js";
+import {initTabs} from "./blocks/initTabs.js";
+import {initPlacesSlider, initResortsSlider} from "./blocks/initSlider.js";
+
+export default async function three_country() {
+    await hostReactAppReady()
+    initTabs()
+    initResortsSlider()
+    initPlacesSlider()
 }

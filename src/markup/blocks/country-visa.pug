@@ -1,0 +1,31 @@
+mixin countryVisa(data)
+    section.coral.country-visa
+        if data.decor
+            img.country-visa__decor(
+                src=data.decor,
+                alt="",
+                aria-hidden="true",
+                loading="lazy",
+            )
+
+        .coral__inner.container
+            article.country-visa__card
+                if data.imageLeft
+                    img.country-visa__image.country-visa__image--left(
+                        src=data.imageLeft,
+                        alt="",
+                        aria-hidden="true",
+                        loading="lazy",
+                    )
+
+                if data.imageRight
+                    img.country-visa__image.country-visa__image--right(
+                        src=data.imageRight,
+                        alt="",
+                        aria-hidden="true",
+                        loading="lazy",
+                    )
+
+                .country-visa__content
+                    h2= data.title
+                    p= data.text

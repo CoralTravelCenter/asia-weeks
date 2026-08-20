@@ -1,0 +1,35 @@
+.country-places__viewport {
+  overflow: hidden;
+}
+
+.country-places__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+}
+
+.country-places__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.country-places__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.country-places__dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #bde8fa;
+  cursor: pointer;
+
+  &.is-active {
+    background: #0099cc;
+  }
+}

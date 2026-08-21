@@ -6,6 +6,12 @@
   }
 }
 
+@mixin desktop {
+  @media (min-width: bp.$screen-desktop) {
+    @content;
+  }
+}
+
 @mixin screen-1024 {
   @media (min-width: bp.$screen-1024) {
     @content;

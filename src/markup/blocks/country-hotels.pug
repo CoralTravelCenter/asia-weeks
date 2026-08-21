@@ -1,18 +1,50 @@
 mixin countryHotels(data, countryId)
-    section.coral.country-hotels(class=`country-hotels--${countryId}`)
-        .coral__inner.container
+    section.coral.country-hotels(
+        id=`hotels-${countryId}`
+        class=`country-hotels--${countryId}`
+        data-tabs
+        data-hotel-tabs
+    )
+        .coral__inner.container.layout-container-limit.center
             h2= data.title
 
             if data.text
                 p.country-hotels__text= data.text
 
             if data.tabs && data.tabs.length
-                nav.country-hotels__tabs(aria-label="Категории отелей")
-                    ul.country-hotels__tabs-list
+                .country-hotels__tabs
+                    ul.country-hotels__tabs-list(
+                        role="tablist"
+                        aria-label=`Категории отелей: ${countryId}`
+                    )
                         each tab, index in data.tabs
-                            li.country-hotels__tabs-item
+                            - const tabId = `hotel-tab-${countryId}-${tab.id}`
+                            - const panelId = `hotel-panel-${countryId}-${tab.id}`
+                            li.country-hotels__tabs-item(role="presentation")
                                 button.country-hotels__tab(
+                                    id=tabId
                                     type="button"
-                                    data-hotel-tab=tab.id
+                                    role="tab"
+                                    data-tab=tab.id
                                     class=index === 0 ? "is-active" : ""
+                                    aria-selected=index === 0 ? "true" : "false"
+                                    aria-controls=panelId
+                                    tabindex=index === 0 ? "0" : "-1"
                                 )= tab.title
+
+                .country-hotels__panels
+                    each tab, index in data.tabs
+                        - const tabId = `hotel-tab-${countryId}-${tab.id}`
+                        - const panelId = `hotel-panel-${countryId}-${tab.id}`
+                        .country-hotels__panel(
+                            id=panelId
+                            role="tabpanel"
+                            data-tab-panel=tab.id
+                            aria-labelledby=tabId
+                            tabindex="0"
+                            class=index === 0 ? "is-active" : ""
+                            hidden=index !== 0
+                        )
+                            if tab.items && tab.items.length
+                                each hotel in tab.items
+                                    article.country-hotels__card= hotel.title

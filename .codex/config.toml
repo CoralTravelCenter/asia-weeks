@@ -1,0 +1,41 @@
+developer_instructions = """
+For a full frontend audit, enforce this exact sequence with at most one live subagent: design_auditor, markup_seo_reviewer, js_reviewer, parent synthesis, STOP. Never spawn audit agents in parallel. Wait for an agent's final result, save it to the required Markdown file, and close/finish that agent before starting the next one. Do not pass raw tool history, large logs, whole source files, or raw Figma output between agents; pass only the required report and compact handoff.
+
+Figma URLs are run-scoped inputs. Extract all exact Figma URLs only from the user message that starts the current audit, preserve them unchanged, remove exact duplicates, and pass the complete list dynamically to design_auditor. Never reuse URLs from old conversations, reports, configs, or prior runs unless the user explicitly requests it. If none are supplied, do not invent or recover any: write .codex/audit/01-design-audit.md with the specified blocker and continue markup and JavaScript audit unless the user explicitly requires a stop.
+
+Before phase 1, record a shallow baseline: git status and pre-existing user changes, project structure, package manager, package.json, Pug/SCSS/JavaScript entrypoints, and existing build/test/lint scripts. Do not deeply audit during baseline. Exclude node_modules, dist, build, coverage, vendor, .cache, generated output, and minified bundles unless a concrete issue requires targeted inspection. Preserve all pre-existing and unrelated changes.
+
+Phase 1 outputs are .codex/audit/01-design-audit.md, 02-markup-seo-audit.md, 03-js-audit.md, and parent-authored frontend-audit.md. The parent synthesizes only those reports, using targeted source checks solely to resolve conflicts. After frontend-audit.md is written, stop. Do not modify application source, do not start frontend_refactorer or final_reviewer, and tell the user that a separate command is required.
+
+Phase 2 starts only after an explicit user command to refactor. Recheck git status, preserve user changes, then run frontend_refactorer alone. It must create refactor-plan.md before source edits and refactor-log.md during implementation. After it finishes, run final_reviewer alone and save post-refactor-review.md. If and only if the verdict is REQUIRES FIXES with confirmed CRITICAL or HIGH findings, allow one limited frontend_refactorer remediation pass followed by one final_reviewer pass. Never loop again. The parent then creates final-status.md.
+
+Agents return structured Markdown to the parent; read-only agents never edit repository files. The parent is responsible for saving their exact useful result into the named report file. Use SEARCH -> TARGETED READ -> ANALYSIS. Findings must cite file plus line/function/component when available, impact, and recommendation. Never copy large diffs into reports.
+"""
+
+[features]
+multi_agent = true
+
+[agents]
+max_concurrent_threads_per_session = 1
+default_subagent_model = "gpt-5.6-terra"
+default_subagent_reasoning_effort = "medium"
+
+[agents.design_auditor]
+description = "Read-only Figma and design-system auditor for phase 1. Run first."
+config_file = "agents/design-auditor.toml"
+
+[agents.markup_seo_reviewer]
+description = "Read-only Pug, semantics, SEO, accessibility, and markup reviewer. Run after design_auditor."
+config_file = "agents/markup-seo-reviewer.toml"
+
+[agents.js_reviewer]
+description = "Read-only frontend JavaScript reviewer. Run after markup_seo_reviewer."
+config_file = "agents/js-reviewer.toml"
+
+[agents.frontend_refactorer]
+description = "Implementation owner for confirmed audit findings. Phase 2 only, after explicit user command."
+config_file = "agents/frontend-refactorer.toml"
+
+[agents.final_reviewer]
+description = "Independent read-only reviewer of the real refactoring diff. Run after frontend_refactorer."
+config_file = "agents/final-reviewer.toml"

@@ -7,62 +7,103 @@ include blocks/country-places
 include blocks/country-massage
 include blocks/country-hotels
 
-section.coral.three-country
-    .coral__inner.container
-        h2 Три разных отдыха
-        p #[strong Убедитесь сами: Азия бывает разной. Вьетнам, Китай и Таиланд] — три направления со своим характером. Сравните их по погоде, кухне, отелям, пляжам и главным местам, чтобы выбрать путешествие, которое подойдёт именно вам.
+- const countryOrder = ["vietnam", "china", "thailand"]
+- const publishedCountries = destinations.countries.filter((country) => country.published !== false).sort((a, b) => countryOrder.indexOf(a.id) - countryOrder.indexOf(b.id))
 
-        nav.destinations-tabs(aria-label="Выбор страны")
-            ul.destinations-tabs__list
-                each country, index in destinations.countries
-                    li.destinations-tabs__item
-                        button.destinations-tabs__button(
-                            type="button",
-                            data-country-tab=country.id,
-                            class=index === 0 ? "is-active" : "",
-                            aria-selected=index === 0 ? "true" : "false",
-                        )= country.tab
+.destinations(data-tabs data-country-tabs)
+    section#destinations.coral.three-country
+        .coral__inner.container.layout-container-limit.center
+            h2 Три разных отдыха
+            p #[strong Убедитесь сами: Азия бывает разной. Вьетнам, Китай и Таиланд] — три направления со своим характером. Сравните их по погоде, кухне, отелям, пляжам и главным местам, чтобы выбрать путешествие, которое подойдёт именно вам.
 
-        .partners
-            h2= destinations.partners.title
-            p Наши партнеры, получите промокоды и тд...
+            .destinations-tabs(aria-label="Выбор страны")
+                ul.destinations-tabs__list(role="tablist")
+                    each country, index in publishedCountries
+                        - const tabId = `country-tab-${country.id}`
+                        - const panelId = `country-panel-${country.id}`
+                        li.destinations-tabs__item(role="presentation")
+                            button.destinations-tabs__button(
+                                id=tabId
+                                type="button"
+                                role="tab"
+                                data-tab=country.id
+                                class=index === 0 ? "is-active" : ""
+                                aria-selected=index === 0 ? "true" : "false"
+                                aria-controls=panelId
+                                tabindex=index === 0 ? "0" : "-1"
+                            )= country.tab
 
-            ul.partners__list
-                each partner in destinations.partners.items
-                    li.partners__item
-                        article.partner-card
-                            img.partner-card__image(
-                                src=partner.image,
-                                alt="",
+            #partner-offers.partners
+                h2= destinations.partners.title
+
+                ul.partners__list
+                    each partner in destinations.partners.items
+                        li.partners__item
+                            article.partner-card(
+                                data-partner-card
+                                tabindex="0"
+                                aria-expanded="false"
                             )
-
-                            .partner-card__content
-                                h3.partner-card__title= partner.title
-
-                                if partner.text
-                                    p.partner-card__text= partner.text
-
-                                coral-button(
-                                    trait="pale",
-                                    shape="pill",
-                                    size="medium",
+                                .partner-card__image(
+                                    style=`background-image: url('${partner.image}')`
+                                    aria-hidden="true"
                                 )
-                                    a(
-                                        href=partner.link || "#",
-                                        data-partner=partner.id,
-                                    )= partner.button
 
-.destinations-tabs__content
-    each country, index in destinations.countries
-        .destinations-tabs__panel(
-            data-country-panel=country.id,
-            class=index === 0 ? "is-active" : "",
-        )
-            +countryStory(country.countryStory, country.id)
-            +countryWeather(country.weather, country.title)
-            +countryVisa(country.visa)
-            +countryCuisine(country.cuisine)
-            +countryResorts(country.resorts, country.id)
-            +countryPlaces(country.places)
-            +countryMassage(country.massage)
-            +countryHotels(country.hotels, country.id)
+                                .partner-card__content.partner-card__content--preview
+                                    h3.partner-card__title= partner.title
+
+                                    if partner.text
+                                        p.partner-card__text= partner.text
+
+                                    if partner.button
+                                        coral-button(
+                                            trait="pale"
+                                            shape="pill"
+                                            size="medium"
+                                        )
+                                            button.partner-card__claim(
+                                                type="button"
+                                                data-partner-claim
+                                            )= partner.button
+
+                                .partner-card__content.partner-card__content--details(aria-hidden="true")
+                                    if partner.detailsTitle
+                                        h3.partner-card__title= partner.detailsTitle
+
+                                    if partner.detailsText
+                                        p.partner-card__text= partner.detailsText
+
+                                    if partner.actionLabel
+                                        coral-button(
+                                            trait="pale"
+                                            shape="pill"
+                                            size="medium"
+                                        )
+                                            button.partner-card__action(
+                                                type="button"
+                                                data-partner-action
+                                                data-promo-code=partner.promoCode || false
+                                            )= partner.actionLabel
+
+    .destinations-tabs__content
+        each country, index in publishedCountries
+            - const tabId = `country-tab-${country.id}`
+            - const panelId = `country-panel-${country.id}`
+            .destinations-tabs__panel(
+                id=panelId
+                role="tabpanel"
+                data-tab-panel=country.id
+                class=index === 0 ? "is-active" : ""
+                aria-labelledby=tabId
+                tabindex="0"
+                hidden=index !== 0
+            )
+                +countryStory(country.countryStory, country.id)
+                +countryWeather(country.weather, country.title)
+                +countryVisa(country.visa, country.id)
+                +countryCuisine(country.cuisine)
+                +countryResorts(country.resorts, country.id)
+                +countryPlaces(country.places, country.id)
+                if country.massage && country.massage.text
+                    +countryMassage(country.massage)
+                +countryHotels(country.hotels, country.id)

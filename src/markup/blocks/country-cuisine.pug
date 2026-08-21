@@ -1,6 +1,8 @@
 mixin countryCuisine(data)
+  - const recommendationLink = typeof data.recommendation.link === "string" ? data.recommendation.link.trim() : ""
+  - const hasRecommendationLink = recommendationLink && recommendationLink !== "#"
     section.coral.country-cuisine
-        .coral__inner.container
+        .coral__inner.container.layout-container-limit.center
             h2= data.title
 
             if data.text
@@ -10,25 +12,33 @@ mixin countryCuisine(data)
                 trait="vivid"
                 layout="alt"
             )
-                coral-image(
-                    slot="visual-phone"
-                    src=data.phone_image
-                )
+                if data.phone_image
+                    coral-image(
+                        slot="visual-phone"
+                        src=data.phone_image
+                    )
+
+                if data.desktop_image
+                    coral-image(
+                        slot="visual-wide"
+                        src=data.desktop_image
+                    )
 
                 h3(slot="heading")= data.recommendation.title
 
                 if data.recommendation.items.length
-                    ul(slot="body")
-                        each item in data.recommendation.items
-                            li= item
+                    ul(slot="body", class="cuisine-list")
+                      each item in data.recommendation.items
+                          li= item
 
-                coral-button-group(
-                    slot="actions"
-                    trait="inline"
-                    primary-trait="vivid"
-                )
-                    coral-button(primary="")
-                        a(href=data.recommendation.link || "#")= data.recommendation.button
+                if hasRecommendationLink
+                    coral-button-group(
+                        slot="actions"
+                        trait="inline"
+                        primary-trait="vivid"
+                    )
+                        coral-button(primary="")
+                            a(href=recommendationLink)= data.recommendation.button
 
             if data.afterText
                 p.country-cuisine__text.country-cuisine__text--after= data.afterText

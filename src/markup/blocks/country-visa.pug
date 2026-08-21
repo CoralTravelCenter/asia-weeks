@@ -1,31 +1,18 @@
-mixin countryVisa(data)
-    section.coral.country-visa
+mixin countryVisa(data, countryId)
+    section.coral.country-visa(data-gsap-section="country-visa")
         if data.decor
             img.country-visa__decor(
-                src=data.decor,
-                alt="",
-                aria-hidden="true",
-                loading="lazy",
+                src=data.decor
+                alt=""
+                aria-hidden="true"
+                data-gsap-decor=countryId === "thailand" ? false : "parallax"
+                data-gsap-side=countryId === "thailand" ? false : "right"
+                data-gsap-distance-desktop=countryId === "thailand" ? false : "6"
+                data-gsap-distance-mobile=countryId === "thailand" ? false : "3"
             )
 
-        .coral__inner.container
+        .coral__inner.container.layout-container-limit.center
             article.country-visa__card
-                if data.imageLeft
-                    img.country-visa__image.country-visa__image--left(
-                        src=data.imageLeft,
-                        alt="",
-                        aria-hidden="true",
-                        loading="lazy",
-                    )
-
-                if data.imageRight
-                    img.country-visa__image.country-visa__image--right(
-                        src=data.imageRight,
-                        alt="",
-                        aria-hidden="true",
-                        loading="lazy",
-                    )
-
                 .country-visa__content
                     h2= data.title
                     p= data.text

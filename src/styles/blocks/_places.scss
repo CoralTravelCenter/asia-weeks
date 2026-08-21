@@ -1,35 +1,55 @@
+@use '../tools/media' as media;
+
+.country-places {
+  position: relative;
+  padding-top: 72px;
+
+  h2 {
+    position: relative;
+    z-index: 3;
+  }
+}
+
+.country-places__decor {
+  position: absolute;
+  z-index: 1;
+  right: var(--space-4);
+  width: 112px;
+  height: 112px;
+  background: url('/girl-hand.png') center / contain no-repeat;
+  pointer-events: none;
+}
+
+.country-places__decor--girl-hand {
+  top: 76px;
+
+  @media (min-width: 1024px) {
+    top: 36px;
+    right: 40%;
+  }
+}
+
 .country-places__viewport {
   overflow: hidden;
 }
 
-.country-places__container {
-  display: flex;
-  touch-action: pan-y pinch-zoom;
-}
+@include media.desktop {
+  .country-places__viewport {
+    overflow: visible;
+  }
 
-.country-places__slide {
-  flex: 0 0 100%;
-  min-width: 0;
-}
+  .country-places__container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+    touch-action: auto;
+  }
 
-.country-places__dots {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 24px;
-}
+  .country-places__slide {
+    min-width: 0;
+  }
 
-.country-places__dot {
-  width: 12px;
-  height: 12px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: #bde8fa;
-  cursor: pointer;
-
-  &.is-active {
-    background: #0099cc;
+  .country-places__dots {
+    display: none;
   }
 }

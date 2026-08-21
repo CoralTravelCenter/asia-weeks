@@ -1,9 +1,1 @@
-.container {
-  width: 100%;
-  max-width: var(--container-width);
-  margin-inline: auto;
-
-  @media (min-width: 993px) {
-    padding-inline: 0;
-  }
-}
+@use '../tools/media' as media;

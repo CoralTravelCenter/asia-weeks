@@ -1,6 +1,8 @@
+@use 'tools/media' as media;
+
 .why-you-have-to {
   position: relative;
-  background: #f1f8ff;
+  background: var(--color-page);
 
   &__decor {
     position: absolute;
@@ -10,7 +12,6 @@
     background-repeat: no-repeat;
     background-size: contain;
 
-    // GSAP parallax будет менять transform
     will-change: transform;
 
     &--dragon {
@@ -20,16 +21,34 @@
       height: 100%;
       background-position: center;
       background-image: url('/dragon.png');
+
+      @include media.desktop {
+        top: var(--section-space);
+        right: 0;
+        left: auto;
+        width: 517px;
+        height: 941px;
+        background-position: right top;
+      }
     }
 
     &--flower {
       left: 40%;
-      bottom: -13%;
+      bottom: -15%;
       width: 100%;
       height: 100%;
       aspect-ratio: 1;
       background-position: bottom right;
       background-image: url('/flower.png');
+
+      @include media.desktop {
+        top: 160px;
+        bottom: auto;
+        left: 0;
+        width: min(560px, 55vw);
+        height: min(560px, 55vw);
+        background-position: left top;
+      }
     }
   }
 
@@ -39,11 +58,10 @@
   }
 }
 
-
 .why-travel__list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: var(--space-4);
 
   margin: 0;
   padding: 0;
@@ -51,31 +69,27 @@
   list-style: none;
 }
 
-
 .why-travel__item {
   min-width: 0;
 }
 
-
 .why-travel-card {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2);
 
   height: 100%;
-  padding: var(--padding-padding_LG, 24px);
+  padding: var(--space-6);
 
-  border-radius: var(--radius-border_Radius_MD, 20px);
-  background: var(--Base-color_Base_Light, #fff);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface);
 }
-
 
 .why-travel-card__header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
 }
-
 
 .why-travel-card__icon {
   flex: 0 0 auto;
@@ -86,7 +100,13 @@
   object-fit: contain;
 }
 
-
 .why-travel-card__title {
-  color: #0092d0;
+  color: var(--color-primary);
+}
+
+@include media.desktop {
+  .why-travel__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
 }

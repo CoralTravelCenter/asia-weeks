@@ -1,17 +1,18 @@
 mixin countryWeather(data, countryTitle)
+    - const seasonImages = ["/winter.jpg", "/spring.jpg", "/summer.jpg", "/fall.jpg"]
     section.coral.country-weather
-        .coral__inner.container
+        .coral__inner.container.layout-container-limit.center
             h2= data.title
 
             p.country-weather__text #[strong #{countryTitle}] — #{data.text}
 
             ul.country-weather__seasons
-                each season in data.seasons
+                each season, index in data.seasons
                     li.country-weather__season
                         article.weather-card
-                            if season.image
+                            if seasonImages[index]
                                 img.weather-card__image(
-                                    src=season.image,
+                                    src=seasonImages[index],
                                     alt="",
                                     loading="lazy",
                                 )

@@ -1,27 +1,33 @@
 @use 'blocks/story';
 @use 'blocks/weather';
 @use 'blocks/visa';
+@use 'blocks/cuisine';
+@use 'blocks/carousel';
 @use 'blocks/resorts';
 @use 'blocks/places';
 @use 'blocks/hotels';
+@use 'tools/media' as media;
 
-
-.three-country {
-  padding-right: 0;
-
-  .container > *:not(.partners__list) {
-    padding-right: 16px;
+.country-weather,
+.country-visa,
+.country-cuisine,
+.country-resorts,
+.country-places,
+.country-hotels {
+  h2 {
+    font-family: var(--font-family-body);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0;
   }
 }
 
 .destinations-tabs__list {
   display: flex;
   list-style: none;
-  background: #fff;
-  padding: 6px;
-  border-radius: 30px;
-  margin-top: 16px;
-  margin-bottom: calc(45px - 16px);
+  padding: var(--space-2);
+  margin-block: var(--space-4) var(--space-8);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
 }
 
 .destinations-tabs__item {
@@ -29,77 +35,173 @@
 }
 
 .destinations-tabs__button {
-  border: none;
-  background: transparent;
-  text-align: center;
   width: 100%;
-  font-size: 16px;
-  padding-block: 7px;
+  min-height: 40px;
+  padding-inline: var(--space-3);
+  border: none;
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+  background-color: transparent;
+  font-size: var(--font-body);
+  text-align: center;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible,
+  &.is-active {
+    color: var(--color-text-inverse);
+    background: var(--color-primary);
+  }
 }
 
 .partners__list {
   list-style: none;
   display: flex;
-  justify-content: start;
-  gap: 24px;
-  overflow-x: scroll;
+  justify-content: flex-start;
+  gap: var(--space-6);
+  margin-right: calc(var(--page-gutter) * -1);
+  padding-right: var(--page-gutter);
+  overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding-right: 16px;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .partners__item {
   scroll-snap-align: start;
-  flex: 1 0 360px;
+  flex: 0 0 90%;
   position: relative;
+
+  @media (min-width: 1024px) {
+    flex: 0 0 100%;
+  }
 }
 
 .partner-card__image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .partner-card__content {
   position: absolute;
   z-index: 2;
   inset: 0;
-  padding: 24px;
-  color: #fff;
+  padding: var(--space-6);
+  color: var(--color-text-inverse);
 
   display: flex;
   flex-direction: column;
   align-items: start;
+  gap: 10px;
+  transition: opacity 280ms ease,
+  transform 280ms ease,
+  visibility 0s linear 280ms;
 
   coral-button {
     display: block;
     margin-top: auto;
 
-    a {
+    a,
+    button {
       min-width: 180px;
     }
   }
 }
 
+.partner-card__content--details {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(12px);
+
+  coral-button {
+    width: 100%;
+  }
+}
+
+.partner-card.is-expanded {
+  .partner-card__content--preview {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+
+  .partner-card__content--details {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 120ms, 120ms, 0s;
+  }
+}
+
+@include media.reduced-motion {
+  .partner-card__content {
+    transition: none;
+  }
+}
+
+.partner-card__claim,
+.partner-card__action {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.partner-card__action {
+  text-transform: uppercase;
+}
+
 .partner-card {
-  border-radius: 20px;
+  position: relative;
+  border-radius: var(--radius-panel);
   overflow: clip;
-  height: 300px;
+  min-height: 315px;
+  cursor: pointer;
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(0 0 0 / 35%), rgb(0 0 0 / 15%) 55%, rgb(0 0 0 / 50%));
+    pointer-events: none;
+  }
 }
 
 .destinations-tabs__panel {
   display: none;
 
-  &.is-active {
+  &.is-active:not([hidden]) {
     display: block;
   }
 }
 
-.destinations-tabs__button {
-  border-radius: 30px;
+.partners {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
 
-  &.is-active {
-    background: #0092D0;
-    color: white;
+@include media.desktop {
+  .partners__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-right: 0;
+    padding-right: 0;
+    overflow: visible;
+  }
+
+  .partners__item {
+    min-width: 0;
   }
 }

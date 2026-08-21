@@ -1,21 +1,30 @@
 mixin countryStory(data, countryId)
-    section.coral.country-story(class=`country-story--${countryId}`)
+    .country-story-shell(data-gsap-section="country-story-flower")
         .country-story__decor.country-story__decor--flower(
             aria-hidden="true"
-            data-parallax="flower"
+            data-gsap-decor="parallax"
+            data-gsap-distance-desktop="5"
+            data-gsap-distance-mobile="2"
         )
 
-        .country-story__inner.container
-            article.country-story__card
-                .country-story__content
-                    h2= data.lead
+        section.coral.country-story(class=`country-story--${countryId}` data-gsap-section="country-story")
+            .country-story__decor.country-story__decor--girl(
+                aria-hidden="true"
+            )
 
-                    p.country-story__text
-                        strong= data.strongText
-                        br
-                        span= data.text
+            .country-story__inner.container.layout-container-limit.center
+                article.country-story__card
+                    if data.decor
+                        img.country-story__decor.country-story__decor--country(
+                            src=data.decor
+                            alt=""
+                            aria-hidden="true"
+                        )
 
-                img.country-story__decor(
-                    src=data.decor
-                    alt=""
-                )
+                    .country-story__content
+                        h2= data.lead
+
+                        p.country-story__text
+                            strong= data.strongText
+                            br
+                            span= data.text

@@ -1,0 +1,45 @@
+.country-resorts__container,
+.country-places__container {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-6);
+  touch-action: pan-y pinch-zoom;
+}
+
+.country-resorts__slide,
+.country-places__slide {
+  display: flex;
+  flex: 0 0 100%;
+  align-self: stretch;
+  min-width: 0;
+}
+
+.country-resorts__slide > coral-pictorial,
+.country-places__slide > coral-pictorial {
+  flex: 1 1 auto;
+  height: 100% !important;
+}
+
+.country-resorts__dots,
+.country-places__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.country-resorts__dot,
+.country-places__dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  cursor: pointer;
+
+  &.is-active {
+    background: var(--color-primary);
+  }
+}

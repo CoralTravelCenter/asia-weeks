@@ -1,31 +1,47 @@
-mixin countryPlaces(data)
-    section.coral.country-places
-        .coral__inner.container
+mixin countryPlaces(data, countryId)
+    - const placesLink = typeof data.link === "string" ? data.link.trim() : ""
+    - const hasPlacesLink = placesLink && placesLink !== "#"
+    section.coral.country-places(data-gsap-section="country-places")
+        .country-places__decor.country-places__decor--girl-hand(
+            aria-hidden="true"
+        )
+
+        .coral__inner.container.layout-container-limit.center
             h2= data.title
 
-            .country-places__slider(data-places-slider)
-                .country-places__viewport
-                    .country-places__container
-                        each place in data.items
-                            .country-places__slide
+            .country-places__slider(
+                data-places-slider
+                role="region"
+                aria-label=data.title
+            )
+                .country-places__viewport(id=`places-viewport-${countryId}`)
+                    .country-places__container(role="list")
+                        each place, index in data.items
+                            .country-places__slide(
+                                id=`places-${countryId}-slide-${index + 1}`
+                                role="group"
+                                aria-label=`${index + 1} из ${data.items.length}`
+                            )
                                 coral-pictorial(
                                     trait="plain"
                                     layout="normal"
                                     style="display: block; width: 100%; height: 100%;"
                                 )
-                                    coral-image(
-                                        slot="visual-wide"
-                                        src=place.image
-                                    )
+                                    if place.image
+                                        coral-image(
+                                            slot="visual-wide"
+                                            src=place.image
+                                        )
 
                                     p(slot="body")!= place.text
 
-                                    coral-button-group(
-                                        slot="actions"
-                                        trait="inline"
-                                        primary-trait="vivid"
-                                    )
-                                        coral-button(primary="")
-                                            a(href=data.link || "#")= data.button
+                                    if hasPlacesLink
+                                        coral-button-group(
+                                            slot="actions"
+                                            trait="inline"
+                                            primary-trait="vivid"
+                                        )
+                                            coral-button(primary="")
+                                                a(href=placesLink)= data.button
 
-                .country-places__dots
+                .country-places__dots(aria-label="Навигация по местам")

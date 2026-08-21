@@ -1,84 +1,111 @@
-import {hostReactAppReady} from "../utils/hostReactAppReady.js";
+import {hostReactAppReady} from '../utils/hostReactAppReady.js';
+
+let currentCleanup = null;
+let mountToken = 0;
 
 export default async function navigation() {
-  await hostReactAppReady()
+  const token = ++mountToken;
+  currentCleanup?.();
+  currentCleanup = null;
+
+  await hostReactAppReady();
+  if (token !== mountToken) return () => {};
+
   const anchors = document.querySelector('.js-anchor');
+  if (!anchors) return () => {};
 
-  if (anchors) {
-    const container = anchors.querySelector('.page-nav__container');
-    const anchorsOffsetTop = anchors.getBoundingClientRect().top + window.scrollY;
+  const controller = new AbortController();
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const placeholder = document.createElement('div');
+  let isFixed = false;
 
-    const placeholder = document.createElement('div');
-    placeholder.className = 'page-nav__placeholder';
-    placeholder.style.display = 'none';
+  placeholder.className = 'page-nav__placeholder';
+  placeholder.setAttribute('aria-hidden', 'true');
+  anchors.before(placeholder);
 
-    anchors.parentNode.insertBefore(placeholder, anchors);
+  const hasHostHotelsNav = () =>
+    Boolean(document.querySelector('.el-affix--fixed .controls'));
 
-    function hotelsNav() {
-      const fixedNav = document.querySelector('.el-affix--fixed');
-      return !!(fixedNav && fixedNav.querySelector('.controls'));
+  const setFixed = (nextFixed) => {
+    if (isFixed === nextFixed) {
+      if (isFixed) placeholder.style.height = `${anchors.offsetHeight}px`;
+      return;
     }
 
-    function setFixed(isFixed) {
-      anchors.classList.toggle('page-nav--fixed', isFixed);
-      container?.classList.toggle('layout-container-limit', isFixed);
-      container?.classList.toggle('center', isFixed);
-      placeholder.style.display = isFixed ? '' : 'none';
+    isFixed = nextFixed;
+    anchors.classList.toggle('page-nav--fixed', isFixed);
+    placeholder.style.height = isFixed ? `${anchors.offsetHeight}px` : '0px';
+  };
 
-      if (isFixed) {
-        placeholder.style.height = `${anchors.offsetHeight}px`;
-      }
+  const sync = () => {
+    const threshold = placeholder.getBoundingClientRect().top + window.scrollY;
+    setFixed(!hasHostHotelsNav() && window.scrollY >= threshold);
+  };
+
+  const fixedTop = () => {
+    const value = Number.parseFloat(getComputedStyle(anchors).top);
+    return Number.isFinite(value) ? value : 0;
+  };
+
+  const targetForHash = (hash) => {
+    if (!hash?.startsWith('#') || hash.length < 2) return null;
+    try {
+      return document.getElementById(decodeURIComponent(hash.slice(1)));
+    } catch {
+      return null;
     }
+  };
 
-    function onScroll() {
-      const scrollY = window.scrollY;
-
-      if (hotelsNav()) {
-        setFixed(false);
-        return;
-      }
-
-      if (scrollY >= anchorsOffsetTop) {
-        if (!anchors.classList.contains('page-nav--fixed')) {
-          setFixed(true);
-        }
-      } else {
-        setFixed(false);
-      }
-    }
-
-    window.addEventListener('scroll', onScroll);
-    window.addEventListener('resize', () => {
-      if (anchors.classList.contains('page-nav--fixed')) {
-        placeholder.style.height = `${anchors.offsetHeight}px`;
-      }
+  const scrollToTarget = (target, enhanceMotion = true) => {
+    const offset = anchors.offsetHeight + fixedTop();
+    const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset);
+    window.scrollTo({
+      top,
+      behavior: enhanceMotion && !reducedMotion.matches ? 'smooth' : 'auto',
     });
-  }
+  };
 
-  const anchorLinks = anchors?.querySelectorAll('.page-nav__link') ?? [];
+  const onClick = (event) => {
+    const link = event.target.closest('.page-nav__link');
+    if (!link || !anchors.contains(link)) return;
 
-  anchorLinks.forEach(link => {
-    link.addEventListener('click', function (e) {
-      const hash = this.getAttribute('href');
-      if (!hash || hash.length < 2) return;
+    const target = targetForHash(link.hash);
+    if (!target) return;
 
-      const target = document.querySelector(hash);
-      if (!target) return;
+    event.preventDefault();
+    history.pushState(null, '', link.hash);
+    scrollToTarget(target);
+  };
 
-      let offset = anchors.offsetHeight;
+  const onLayoutChange = () => {
+    if (isFixed) placeholder.style.height = `${anchors.offsetHeight}px`;
+    sync();
+  };
 
-      if (anchors.classList.contains('page-nav--fixed')) {
-        offset = anchors.offsetHeight;
-      }
+  anchors.addEventListener('click', onClick, {signal: controller.signal});
+  window.addEventListener('scroll', sync, {passive: true, signal: controller.signal});
+  window.addEventListener('resize', onLayoutChange, {passive: true, signal: controller.signal});
+  window.addEventListener('orientationchange', onLayoutChange, {passive: true, signal: controller.signal});
+  window.addEventListener('load', onLayoutChange, {once: true, signal: controller.signal});
 
-      const targetPos = target.getBoundingClientRect().top + window.scrollY - offset;
+  const resizeObserver = typeof ResizeObserver === 'undefined'
+    ? null
+    : new ResizeObserver(onLayoutChange);
+  resizeObserver?.observe(anchors);
 
-      e.preventDefault();
+  sync();
 
-      window.scrollTo({
-        top: targetPos,
-        behavior: 'smooth'
-      });
-    });
-  });
+  const initialTarget = targetForHash(window.location.hash);
+  if (initialTarget) requestAnimationFrame(() => scrollToTarget(initialTarget, false));
+
+  const cleanup = () => {
+    controller.abort();
+    resizeObserver?.disconnect();
+    setFixed(false);
+    placeholder.remove();
+    if (currentCleanup === cleanup) currentCleanup = null;
+  };
+
+  currentCleanup = cleanup;
+  return cleanup;
 }

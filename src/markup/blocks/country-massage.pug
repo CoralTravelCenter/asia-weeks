@@ -1,6 +1,8 @@
 mixin countryMassage(data)
+    - const recommendationLink = typeof data.recommendation.link === "string" ? data.recommendation.link.trim() : ""
+    - const hasRecommendationLink = recommendationLink && recommendationLink !== "#"
     section.coral.country-massage
-        .coral__inner.container
+        .coral__inner.container.layout-container-limit.center
             h2= data.title
 
             if data.text
@@ -22,13 +24,14 @@ mixin countryMassage(data)
                         each item in data.recommendation.items
                             li= item
 
-                coral-button-group(
-                    slot="actions"
-                    trait="inline"
-                    primary-trait="vivid"
-                )
-                    coral-button(primary="")
-                        a(href=data.recommendation.link || "#")= data.recommendation.button
+                if hasRecommendationLink
+                    coral-button-group(
+                        slot="actions"
+                        trait="inline"
+                        primary-trait="vivid"
+                    )
+                        coral-button(primary="")
+                            a(href=recommendationLink)= data.recommendation.button
 
             if data.afterText
                 p.country-massage__text.country-massage__text--after= data.afterText

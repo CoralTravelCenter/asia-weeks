@@ -1,24 +1,45 @@
-mixin countryResorts(data)
-    section.coral.country-resorts
-        .coral__inner.container
+mixin countryResorts(data, countryId)
+    section.coral.country-resorts(data-gsap-section="country-resorts")
+        if data.decor
+            img.country-resorts__decor(
+                src=data.decor
+                alt=""
+                aria-hidden="true"
+                data-gsap-decor="drift"
+                data-gsap-side="left"
+            )
+
+        .coral__inner.container.layout-container-limit.center
             h2= data.title
 
-            .country-resorts__slider(data-resorts-slider)
-                .country-resorts__viewport
-                    .country-resorts__container
-                        each resort in data.items
-                            .country-resorts__slide
+            if data.text
+                p.country-resorts__text= data.text
+
+            .country-resorts__slider(
+                data-resorts-slider
+                role="region"
+                aria-label=data.title
+            )
+                .country-resorts__viewport(id=`resorts-viewport-${countryId}`)
+                    .country-resorts__container(role="list")
+                        each resort, index in data.items
+                            .country-resorts__slide(
+                                id=`resorts-${countryId}-slide-${index + 1}`
+                                role="group"
+                                aria-label=`${index + 1} из ${data.items.length}`
+                            )
                                 coral-pictorial(
                                     trait="plain"
-                                    layout="normal"
+                                    layout=index % 2 === 0 ? "normal" : "alt"
                                     style="display: block; width: 100%; height: 100%;"
                                 )
-                                    coral-image(
-                                        slot="visual-wide"
-                                        src=resort.image
-                                    )
+                                    if resort.image
+                                        coral-image(
+                                            slot="visual-wide"
+                                            src=resort.image
+                                        )
 
                                     h3(slot="heading")= resort.title
                                     p(slot="body")!= resort.text
 
-                .country-resorts__dots
+                .country-resorts__dots(aria-label="Навигация по курортам")
